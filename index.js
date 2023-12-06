@@ -1,8 +1,9 @@
 const sequelize = require("./app/database/config.js");
 
-const Producto = require("./app/models/Producto.model.js");
+require("./app/models/index.js"); //llamado a los modelos
 
 const main = async ()  => {
+
     try {
         console.log("Contenctando con la base de datos...");
         await sequelize.sync({force: true, alter: true});
