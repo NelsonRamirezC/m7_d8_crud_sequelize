@@ -8,7 +8,8 @@ const Categoria = sequelize.define('Categoria', {
   },
   responsable: {
     type: DataTypes.STRING(50),
-    allowNull: false
+    allowNull: false,
+    defaultValue: "Sin categoria"
   }
 }, {
   tableName: "Categorias",
