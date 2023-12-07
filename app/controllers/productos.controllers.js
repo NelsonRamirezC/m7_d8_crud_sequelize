@@ -1,11 +1,18 @@
 const Producto = require("../models/Producto.model.js");
+const Categoria = require("../models/Categoria.model.js");
 
 const getAllProductos = async (req, res) => {
     try {
-        let productos = await Producto.findAll();
+        let productos = await Producto.findAll({
+            include: {
+                model: Categoria,
+                as: "categoria"
+            }
+        });
 
         res.json({ code: 200, productos, count: productos.length });
     } catch (error) {
+        console.log(error);
         res.status(500).json({
             code: 500,
             message: "Error al consultar productos.",
@@ -15,7 +22,16 @@ const getAllProductos = async (req, res) => {
 
 const addProducto = async (req, res) => {
     try {
-        let { nombre, descripcion, precio, stock } = req.body;
+        let { nombre, descripcion, precio, stock, id_categoria } = req.body;
+
+
+        let categoria = await Categoria.findByPk(id_categoria);
+
+        if(!categoria){
+            return res
+                .status(400)
+                .json({ code: 400, message: "Ha ingresado una categoria que no existe." });
+        }
 
         let producto = await Producto.create({
             nombre,
@@ -23,6 +39,12 @@ const addProducto = async (req, res) => {
             precio,
             stock,
         });
+
+        //vinculamos el producto a la categoria
+        await categoria.addProducto(producto);
+        
+        //actualizo al objeto que será enviado al cliente el id de la categoria
+        producto.id_categoria = id_categoria;
 
         res.status(201).json({
             code: 201,

@@ -7,11 +7,14 @@ const controller = require("../controllers/categorias.controllers.js");
 //GET ALL CATEGORIAS
 router.get('/', controller.getAllCategorias);
 
+//get ALL CATEGORIAS WITH PRODUCTOS
+router.get("/productos", controller.getAllCategoriasWithProductos)
+
 //GET CATEGORIA BY ID
 // router.get('/:id', controller.getCategoriaById);
 
 //ADD CATEGORIA
-//router.post('/', controller.addCategoria);
+router.post('/', controller.addCategoria);
 
 //UPDATE CATEGORIA-> PUT
 
