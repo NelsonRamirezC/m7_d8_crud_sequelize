@@ -1,8 +1,23 @@
 const express = require("express");
 const router = express.Router();
 
-router.get('/', (req, res) => {
-    res.send("ruta categorias");
-});
+const controller = require("../controllers/categorias.controllers.js");
+
+
+//GET ALL CATEGORIAS
+router.get('/', controller.getAllCategorias);
+
+//GET CATEGORIA BY ID
+// router.get('/:id', controller.getCategoriaById);
+
+//ADD CATEGORIA
+//router.post('/', controller.addCategoria);
+
+//UPDATE CATEGORIA-> PUT
+
+//router.put('/', controller.updateCategoria);
+
+//DELETE CATEGORIA
+//router.delete('/', controller.deleteCategoria);
 
 module.exports = router;
